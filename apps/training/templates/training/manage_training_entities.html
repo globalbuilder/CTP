@@ -1,0 +1,48 @@
+<!-- apps/training/templates/training/manage_training_entities.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}إدارة جهات التدريب{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="entities-section">
+            <h2>إدارة جهات التدريب</h2>
+            <a href="{% url 'training:add_training_entity' %}" class="button add-button">إضافة جهة تدريب</a>
+            <table class="entities-table">
+                <thead>
+                    <tr>
+                        <th>اسم الجهة</th>
+                        <th>الفصل الدراسي</th>
+                        <th>متاح</th>
+                        <th>العمليات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.name }}</td>
+                        <td>{{ entity.get_semester_display }}</td>
+                        <td>{{ entity.is_available|yesno:"نعم,لا" }}</td>
+                        <td>
+                            <a href="{% url 'training:edit_training_entity' entity.pk %}" class="button">تعديل</a>
+                            <a href="{% url 'training:delete_training_entity' entity.pk %}" class="button delete-button">حذف</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">لا توجد جهات تدريب.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+{% endblock %}

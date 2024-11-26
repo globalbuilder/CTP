@@ -1,0 +1,26 @@
+<!-- apps/accounts/templates/accounts/delete_supervisor.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}حذف المشرف{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="delete-section">
+            <h2>حذف المشرف</h2>
+            <p>هل أنت متأكد من رغبتك في حذف المشرف <strong>{{ supervisor.user.get_full_name }}</strong>؟ هذا الإجراء غير قابل للتراجع.</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="button delete-button">حذف</button>
+                <a href="{% url 'accounts:manage_supervisors' %}" class="button">إلغاء</a>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}مرحبا بكم - جامعة نجران{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
+{% endblock %}
+
+{% block guest_content %}
+<main>
+    <div class="main-container">
+        <section class="welcome-section">
+            <h2>مرحبا بكم في بوابة التدريب التعاوني لجامعة نجران</h2>
+            <p>منصة وحدة التدريب التعاوني بجامعة نجران هي نظام إلكتروني يهدف إلى تسهيل عملية التدريب التعاوني بين الطلاب والشركات والجامعة.</p>
+        </section>
+
+        <section class="project-logo-section">
+            <img src="{% static 'core/images/platform_logo.png' %}" alt="شعار المشروع">
+        </section>
+
+        <section class="index-button-section">
+            <div class="top-line"></div>
+            <a href="{% url 'accounts:login' %}" class="index-button">
+                <i class="fas fa-unlock"></i> تسجيل الدخول
+            </a>
+            <div class="bottom-line"></div>
+        </section>
+    </div>
+</main>
+{% endblock %}
+
+{% block auth_content %}
+<!-- Content for authenticated users -->
+{% endblock %}

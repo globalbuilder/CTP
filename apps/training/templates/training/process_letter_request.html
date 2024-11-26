@@ -1,0 +1,33 @@
+<!-- apps/training/templates/training/process_letter_request.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}معالجة طلب الخطاب{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="process-section">
+            <h2>معالجة طلب الخطاب</h2>
+            <div class="details">
+                <p><strong>الطالب:</strong> {{ letter_request.student.get_full_name }}</p>
+                <p><strong>الرقم الجامعي:</strong> {{ letter_request.student.student_profile.student_id }}</p>
+                <p><strong>جهة التدريب:</strong> {{ letter_request.training_entity.name }}</p>
+                <p><strong>تاريخ البدء:</strong> {{ letter_request.start_date|date:"Y-m-d" }}</p>
+                <p><strong>تاريخ الانتهاء:</strong> {{ letter_request.end_date|date:"Y-m-d" }}</p>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="action" value="approve" class="button">اعتماد</button>
+                <button type="submit" name="action" value="reject" class="button reject-button">رفض</button>
+                <a href="{% url 'training:letter_requests' %}" class="button cancel-button">عودة</a>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

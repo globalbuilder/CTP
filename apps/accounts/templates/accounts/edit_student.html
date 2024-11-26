@@ -1,0 +1,28 @@
+<!-- apps/accounts/templates/accounts/edit_student.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}تعديل بيانات الطالب{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="edit-section">
+            <h2>تعديل بيانات الطالب</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="form-actions">
+                    <button type="submit" class="button">حفظ التغييرات</button>
+                    <a href="{% url 'accounts:manage_students' %}" class="button cancel-button">إلغاء</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

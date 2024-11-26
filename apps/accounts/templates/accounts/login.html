@@ -1,0 +1,47 @@
+<!-- apps/accounts/templates/accounts/login.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}تسجيل الدخول{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+{% endblock %}
+
+{% block guest_content %}
+<main>
+    <div class="main-container">
+        <section class="login-box">
+            <h2>تسجيل الدخول</h2>
+            <form method="post">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <p class="message">{{ form.non_field_errors }}</p>
+                {% endif %}
+                <div class="login-text-box">
+                    <label for="{{ form.username.id_for_label }}">
+                        <i class="fas fa-user"></i>
+                        <span>{{ form.username.label }}</span>
+                    </label>
+                    {{ form.username }}
+                </div>
+
+                <div class="login-text-box">
+                    <label for="{{ form.password.id_for_label }}">
+                        <i class="fas fa-lock"></i>
+                        <span>{{ form.password.label }}</span>
+                    </label>
+                    {{ form.password }}
+                </div>
+
+                <button type="submit" class="login-button">تسجيل الدخول</button>
+            </form>
+
+            <div class="login-link">
+                <a href="#">نسيت كلمة المرور؟</a>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

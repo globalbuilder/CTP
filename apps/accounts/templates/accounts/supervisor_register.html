@@ -1,0 +1,35 @@
+<!-- apps/accounts/templates/accounts/supervisor_register.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}تسجيل مشرف{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="register-section">
+            <h2>تسجيل مشرف جديد</h2>
+            <form method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>معلومات الحساب</legend>
+                    {{ user_form.as_p }}
+                </fieldset>
+                <fieldset>
+                    <legend>معلومات المشرف</legend>
+                    {{ profile_form.as_p }}
+                </fieldset>
+                <div class="form-actions">
+                    <button type="submit" class="button">تسجيل</button>
+                    <a href="{% url 'accounts:login' %}" class="button cancel-button">لديك حساب؟ تسجيل الدخول</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

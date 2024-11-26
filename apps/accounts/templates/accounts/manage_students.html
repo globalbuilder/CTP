@@ -1,0 +1,48 @@
+<!-- apps/accounts/templates/accounts/manage_students.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}إدارة الطلاب{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="manage-section">
+            <h2>إدارة الطلاب</h2>
+            <table class="manage-table">
+                <thead>
+                    <tr>
+                        <th>الرقم الجامعي</th>
+                        <th>الاسم الكامل</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.student_id }}</td>
+                        <td>{{ student.user.get_full_name }}</td>
+                        <td>{{ student.user.email }}</td>
+                        <td>
+                            <a href="{% url 'accounts:view_student' student.id %}" class="button">عرض</a>
+                            <a href="{% url 'accounts:edit_student' student.id %}" class="button">تعديل</a>
+                            <a href="{% url 'accounts:delete_student' student.id %}" class="button delete-button">حذف</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">لا يوجد طلاب.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+{% endblock %}

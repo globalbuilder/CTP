@@ -1,0 +1,51 @@
+<!-- apps/accounts/templates/accounts/view_student.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}عرض بيانات الطالب{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="view-section">
+            <h2>عرض بيانات الطالب</h2>
+            <div class="student-details">
+                <p><strong>الرقم الجامعي:</strong> {{ student.student_id }}</p>
+                <p><strong>الاسم الكامل:</strong> {{ student.user.get_full_name }}</p>
+                <p><strong>البريد الإلكتروني:</strong> {{ student.user.email }}</p>
+                <p><strong>رقم الهوية:</strong> {{ student.national_id }}</p>
+                <p><strong>الجنس:</strong> {{ student.get_gender_display }}</p>
+                <p><strong>رقم الجوال:</strong> {{ student.contact_number }}</p>
+                <p><strong>المعدل:</strong> {{ student.gpa }}</p>
+                <p><strong>الساعات المكتسبة:</strong> {{ student.hours_completed }}</p>
+                <p><strong>التخصص:</strong> {{ student.major }}</p>
+                <p><strong>القسم:</strong> {{ student.department.name }}</p>
+                <p><strong>المشرف الأكاديمي:</strong>
+                    {% if student.supervisor %}
+                        {{ student.supervisor.get_full_name }}
+                    {% else %}
+                        غير معين
+                    {% endif %}
+                </p>
+                <p><strong>جهة التدريب:</strong>
+                    {% if student.training_entity %}
+                        {{ student.training_entity.name }}
+                    {% else %}
+                        غير معين
+                    {% endif %}
+                </p>
+            </div>
+            <div class="actions">
+                <a href="{% url 'accounts:edit_student' student.id %}" class="button">تعديل</a>
+                <a href="{% url 'accounts:delete_student' student.id %}" class="button delete-button">حذف</a>
+                <a href="{% url 'accounts:manage_students' %}" class="button">عودة</a>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

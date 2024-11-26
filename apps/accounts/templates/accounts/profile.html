@@ -1,0 +1,79 @@
+<!-- apps/accounts/templates/accounts/profile.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}الملف الشخصي{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<main>
+    <div class="main-container">
+        <section class="profile-section">
+            <h2>الملف الشخصي</h2>
+            <div class="profile-details">
+                <p><strong>الاسم الكامل:</strong> {{ request.user.get_full_name }}</p>
+                <p><strong>البريد الإلكتروني:</strong> {{ request.user.email }}</p>
+                <p><strong>نوع المستخدم:</strong> {{ request.user.get_user_type_display }}</p>
+                <!-- Additional user details -->
+                {% if request.user.user_type == 'student' %}
+                    <p><strong>الرقم الجامعي:</strong> {{ request.user.student_profile.student_id }}</p>
+                    <p><strong>رقم الهوية:</strong> {{ request.user.student_profile.national_id }}</p>
+                    <p><strong>الجنس:</strong> {{ request.user.student_profile.get_gender_display }}</p>
+                    <p><strong>رقم الجوال:</strong> {{ request.user.student_profile.contact_number }}</p>
+                    <p><strong>المعدل:</strong> {{ request.user.student_profile.gpa }}</p>
+                    <p><strong>الساعات المكتسبة:</strong> {{ request.user.student_profile.hours_completed }}</p>
+                    <p><strong>التخصص:</strong> {{ request.user.student_profile.major }}</p>
+                    <p><strong>القسم:</strong> {{ request.user.student_profile.department.name }}</p>
+                    <p><strong>المشرف الأكاديمي:</strong>
+                        {% if request.user.student_profile.supervisor %}
+                            {{ request.user.student_profile.supervisor.get_full_name }}
+                        {% else %}
+                            غير معين
+                        {% endif %}
+                    </p>
+                    <p><strong>جهة التدريب:</strong>
+                        {% if request.user.student_profile.training_entity %}
+                            {{ request.user.student_profile.training_entity.name }}
+                        {% else %}
+                            غير معين
+                        {% endif %}
+                    </p>
+                {% elif request.user.user_type == 'supervisor' %}
+                    <p><strong>الرقم التعريفي:</strong> {{ request.user.supervisor_profile.employee_id }}</p>
+                    <p><strong>الجنس:</strong> {{ request.user.supervisor_profile.get_gender_display }}</p>
+                    <p><strong>رقم الجوال:</strong> {{ request.user.supervisor_profile.contact_number }}</p>
+                    <p><strong>القسم:</strong> {{ request.user.supervisor_profile.department.name }}</p>
+                    <p><strong>التخصص:</strong> {{ request.user.supervisor_profile.specialization }}</p>
+                    <p><strong>الحالة:</strong> {{ request.user.supervisor_profile.status }}</p>
+                {% elif request.user.user_type == 'head' %}
+                    <p><strong>رقم الموظف:</strong> {{ request.user.head_profile.employee_id }}</p>
+                    <p><strong>رقم المكتب:</strong> {{ request.user.head_profile.office_number }}</p>
+                    <p><strong>رقم الاتصال:</strong> {{ request.user.head_profile.contact_number }}</p>
+                {% endif %}
+            </div>
+            <div class="profile-actions">
+                <!-- Edit Profile Form -->
+                <h3>تعديل الملف الشخصي</h3>
+                <form method="post" action="{% url 'accounts:profile' %}">
+                    {% csrf_token %}
+                    {{ edit_form.as_p }}
+                    {{ profile_form.as_p }}
+                    <button type="submit" name="edit_profile" class="button">حفظ التغييرات</button>
+                </form>
+
+                <!-- Change Password Form -->
+                <h3>تغيير كلمة المرور</h3>
+                <form method="post" action="{% url 'accounts:profile' %}">
+                    {% csrf_token %}
+                    {{ password_form.as_p }}
+                    <button type="submit" name="change_password" class="button">تغيير كلمة المرور</button>
+                </form>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,59 @@
+<!-- apps/core/templates/core/home_student.html -->
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}الصفحة الرئيسية للطالب{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/home_user.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<div class="welcome-section">
+    <h1>مرحبًا بك، {{ user.get_full_name }}!</h1>
+    <p>هذه هي صفحتك الرئيسية حيث يمكنك الوصول السريع إلى المهام والبيانات الهامة.</p>
+</div>
+
+<!-- Dashboard Cards for Student -->
+<div class="dashboard-cards">
+    <div class="card">
+        <div class="card-icon">
+            <i class="fas fa-file-alt"></i>
+        </div>
+        <div class="card-details">
+            <h2>طلبات التدريب</h2>
+            <p>عرض وإدارة طلبات التدريب الخاصة بك.</p>
+            <a href="{% url 'training:view_my_requests' %}" class="card-link">عرض التفاصيل</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-icon">
+            <i class="fas fa-file-upload"></i>
+        </div>
+        <div class="card-details">
+            <h2>رفع التقارير</h2>
+            <p>قم برفع التقارير الدورية والنهائية.</p>
+            <a href="{% url 'reports:upload_report' %}" class="card-link">رفع تقرير</a>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions for Student -->
+<div class="quick-actions">
+    <h2>الوصول السريع</h2>
+    <div class="actions-grid">
+        <a href="{% url 'training:submit_training_request' %}" class="action-item">
+            <i class="fas fa-file-alt"></i>
+            <span>تقديم طلب تدريب</span>
+        </a>
+        <a href="{% url 'reports:upload_report' %}" class="action-item">
+            <i class="fas fa-file-upload"></i>
+            <span>رفع تقرير</span>
+        </a>
+        <a href="{% url 'communications:send_message' %}" class="action-item">
+            <i class="fas fa-paper-plane"></i>
+            <span>إرسال رسالة</span>
+        </a>
+    </div>
+</div>
+{% endblock %}

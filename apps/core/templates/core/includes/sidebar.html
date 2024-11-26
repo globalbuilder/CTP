@@ -1,0 +1,254 @@
+<!-- apps/core/templates/core/sidebar.html -->
+{% load static %}
+
+<nav class="sidebar-container">
+    <!-- الرئيسية Section -->
+    <div class="sidebar-section">
+        <div class="section-header">
+            <span class="section-title">الرئيسية</span>
+        </div>
+        <ul>
+            <li class="{% if request.resolver_match.view_name == 'core:home' %}active{% endif %}">
+                <a href="{% url 'core:home' %}">
+                    <i class="fas fa-home"></i>
+                    <span>الرئيسية</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-divider"></div>
+    </div>
+
+    {% if request.user.user_type == 'student' %}
+    <!-- طلبات التدريب Section for Student -->
+    <div class="sidebar-section">
+        <div class="section-header">
+            <span class="section-title">طلبات التدريب</span>
+        </div>
+        <ul>
+            <li class="{% if request.resolver_match.view_name == 'training:submit_training_request' %}active{% endif %}">
+                <a href="{% url 'training:submit_training_request' %}">
+                    <i class="fas fa-file-alt"></i>
+                    <span>تقديم طلب تدريب</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'training:submit_letter_request' %}active{% endif %}">
+                <a href="{% url 'training:submit_letter_request' %}">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>تقديم طلب خطاب</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'training:view_my_requests' %}active{% endif %}">
+                <a href="{% url 'training:view_my_requests' %}">
+                    <i class="fas fa-eye"></i>
+                    <span>عرض طلباتي</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-divider"></div>
+    </div>
+
+    <!-- التدريب Section for Student -->
+    <div class="sidebar-section">
+        <div class="section-header">
+            <span class="section-title">التدريب</span>
+        </div>
+        <ul>
+            <li class="{% if request.resolver_match.view_name == 'training:training_details' %}active{% endif %}">
+                <a href="{% url 'training:training_details' %}">
+                    <i class="fas fa-briefcase"></i>
+                    <span>بيانات التدريب</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'reports:upload_report' %}active{% endif %}">
+                <a href="{% url 'reports:upload_report' %}">
+                    <i class="fas fa-file-upload"></i>
+                    <span>رفع التقارير</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'reports:view_reports' %}active{% endif %}">
+                <a href="{% url 'reports:view_reports' %}">
+                    <i class="fas fa-star"></i>
+                    <span>عرض التقييمات</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-divider"></div>
+    </div>
+    {% elif request.user.user_type == 'supervisor' %}
+    <!-- الطلاب Section for Supervisor -->
+    <div class="sidebar-section">
+        <div class="section-header">
+            <span class="section-title">الطلاب</span>
+        </div>
+        <ul>
+            <li class="{% if request.resolver_match.view_name == 'accounts:view_assigned_students' %}active{% endif %}">
+                <a href="{% url 'accounts:view_assigned_students' %}">
+                    <i class="fas fa-users"></i>
+                    <span>عرض الطلاب</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'reports:view_reports' %}active{% endif %}">
+                <a href="{% url 'reports:view_reports' %}">
+                    <i class="fas fa-file-alt"></i>
+                    <span>تقارير الطلاب</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'evaluations:evaluate_students' %}active{% endif %}">
+                <a href="{% url 'evaluations:evaluate_students' %}">
+                    <i class="fas fa-star"></i>
+                    <span>تقييم الطلاب</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-divider"></div>
+    </div>
+    {% elif request.user.user_type == 'head' %}
+    <!-- الطلاب Section for Training Unit Head -->
+    <div class="sidebar-section">
+        <div class="section-header">
+            <span class="section-title">الطلاب</span>
+        </div>
+        <ul>
+            <li class="{% if request.resolver_match.view_name == 'accounts:manage_students' %}active{% endif %}">
+                <a href="{% url 'accounts:manage_students' %}">
+                    <i class="fas fa-users"></i>
+                    <span>إدارة بيانات الطلاب</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'evaluations:view_evaluations' %}active{% endif %}">
+                <a href="{% url 'evaluations:view_evaluations' %}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>استعراض تقييمات الطلاب</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-divider"></div>
+    </div>
+
+    <!-- المشرفون Section for Training Unit Head -->
+    <div class="sidebar-section">
+        <div class="section-header">
+            <span class="section-title">المشرفون</span>
+        </div>
+        <ul>
+            <li class="{% if request.resolver_match.view_name == 'accounts:manage_supervisors' %}active{% endif %}">
+                <a href="{% url 'accounts:manage_supervisors' %}">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>إدارة بيانات المشرفين</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'accounts:assign_supervisors' %}active{% endif %}">
+                <a href="{% url 'accounts:assign_supervisors' %}">
+                    <i class="fas fa-user-tie"></i>
+                    <span>تعيين مشرفين</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-divider"></div>
+    </div>
+
+    <!-- جهات التدريب Section for Training Unit Head -->
+    <div class="sidebar-section">
+        <div class="section-header">
+            <span class="section-title">جهات التدريب</span>
+        </div>
+        <ul>
+            <li class="{% if request.resolver_match.view_name == 'training:manage_training_entities' %}active{% endif %}">
+                <a href="{% url 'training:manage_training_entities' %}">
+                    <i class="fas fa-building"></i>
+                    <span>إدارة بيانات جهات التدريب</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'evaluations:view_training_entity_evaluations' %}active{% endif %}">
+                <a href="{% url 'evaluations:view_training_entity_evaluations' %}">
+                    <i class="fas fa-star"></i>
+                    <span>استعراض تقييمات جهات التدريب</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-divider"></div>
+    </div>
+
+    <!-- الطلبات Section for Training Unit Head -->
+    <div class="sidebar-section">
+        <div class="section-header">
+            <span class="section-title">الطلبات</span>
+        </div>
+        <ul>
+            <li class="{% if request.resolver_match.view_name == 'training:application_requests' %}active{% endif %}">
+                <a href="{% url 'training:application_requests' %}">
+                    <i class="fas fa-file-alt"></i>
+                    <span>طلبات التقديم</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'training:letter_requests' %}active{% endif %}">
+                <a href="{% url 'training:letter_requests' %}">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>طلبات الخطابات</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-divider"></div>
+    </div>
+
+    <!-- التقارير Section for Training Unit Head -->
+    <div class="sidebar-section">
+        <div class="section-header">
+            <span class="section-title">التقارير</span>
+        </div>
+        <ul>
+            <li class="{% if request.resolver_match.view_name == 'reports:view_archive' %}active{% endif %}">
+                <a href="{% url 'reports:view_archive' %}">
+                    <i class="fas fa-archive"></i>
+                    <span>عرض الأرشيف</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-divider"></div>
+    </div>
+    {% endif %}
+
+    <!-- التواصل Section for All Users -->
+    <div class="sidebar-section">
+        <div class="section-header">
+            <span class="section-title">التواصل</span>
+        </div>
+        <ul>
+            <li class="{% if request.resolver_match.view_name == 'communications:inbox' %}active{% endif %}">
+                <a href="{% url 'communications:inbox' %}">
+                    <i class="fas fa-envelope"></i>
+                    <span>الرسائل الواردة</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'communications:send_message' %}active{% endif %}">
+                <a href="{% url 'communications:send_message' %}">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>إرسال رسالة</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-divider"></div>
+    </div>
+
+    <!-- الحساب Section for All Users -->
+    <div class="sidebar-section">
+        <div class="section-header">
+            <span class="section-title">الحساب</span>
+        </div>
+        <ul>
+            <li class="{% if request.resolver_match.view_name == 'accounts:profile' %}active{% endif %}">
+                <a href="{% url 'accounts:profile' %}">
+                    <i class="fas fa-user"></i>
+                    <span>ملفي الشخصي</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'accounts:logout' %}">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-divider"></div>
+    </div>
+</nav>

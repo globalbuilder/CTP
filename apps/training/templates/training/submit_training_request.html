@@ -1,0 +1,27 @@
+<!-- apps/training/templates/training/submit_training_request.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}تقديم طلب تدريب{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="form-section">
+            <h2>تقديم طلب تدريب</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="form-actions">
+                    <button type="submit" class="button">إرسال الطلب</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

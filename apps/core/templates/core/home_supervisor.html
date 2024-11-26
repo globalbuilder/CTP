@@ -1,0 +1,41 @@
+<!-- apps/core/templates/core/home_supervisor.html -->
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}الصفحة الرئيسية للمشرف{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'core/css/home_user.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<div class="welcome-section">
+    <h1>مرحبًا بك، {{ user.get_full_name }}!</h1>
+    <p>هذه هي صفحتك الرئيسية حيث يمكنك الوصول السريع إلى المهام والبيانات الهامة.</p>
+</div>
+
+<!-- Dashboard Cards for Supervisor -->
+<div class="dashboard-cards">
+    <div class="card">
+        <div class="card-icon">
+            <i class="fas fa-users"></i>
+        </div>
+        <div class="card-details">
+            <h2>طلابي المكلفين</h2>
+            <p>عرض وإدارة الطلاب المكلفين.</p>
+            <a href="{% url 'accounts:view_assigned_students' %}" class="card-link">عرض التفاصيل</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-icon">
+            <i class="fas fa-star"></i>
+        </div>
+        <div class="card-details">
+            <h2>تقييم الطلاب</h2>
+            <p>قم بتقييم أداء الطلاب.</p>
+            <a href="{% url 'evaluations:evaluate_students' %}" class="card-link">تقييم الآن</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

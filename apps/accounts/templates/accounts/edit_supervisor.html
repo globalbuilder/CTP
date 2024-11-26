@@ -1,0 +1,28 @@
+<!-- apps/accounts/templates/accounts/edit_supervisor.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}تعديل بيانات المشرف{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="edit-section">
+            <h2>تعديل بيانات المشرف</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="form-actions">
+                    <button type="submit" class="button">حفظ التغييرات</button>
+                    <a href="{% url 'accounts:manage_supervisors' %}" class="button cancel-button">إلغاء</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

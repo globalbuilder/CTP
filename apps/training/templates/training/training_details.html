@@ -1,0 +1,32 @@
+<!-- apps/training/templates/training/training_details.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}تفاصيل التدريب{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="details-section">
+            <h2>تفاصيل التدريب</h2>
+            {% if training_detail %}
+            <div class="detail-item">
+                <p><strong>جهة التدريب:</strong> {{ training_detail.training_entity.name }}</p>
+                <p><strong>المشرف الأكاديمي:</strong> {{ training_detail.supervisor.get_full_name }}</p>
+                <p><strong>تاريخ البدء:</strong> {{ training_detail.start_date|date:"d-m-Y" }}</p>
+                <p><strong>تاريخ الانتهاء:</strong> {{ training_detail.end_date|date:"d-m-Y" }}</p>
+                <p><strong>المهام الموكلة:</strong> {{ training_detail.tasks_assigned }}</p>
+                <p><strong>المهارات المكتسبة:</strong> {{ training_detail.skills_learned }}</p>
+            </div>
+            {% else %}
+            <p>لا توجد تفاصيل متاحة للتدريب.</p>
+            {% endif %}
+        </section>
+    </div>
+</main>
+{% endblock %}

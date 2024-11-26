@@ -1,0 +1,37 @@
+<!-- apps/training/templates/training/process_training_request.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}معالجة طلب التدريب{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="process-section">
+            <h2>معالجة طلب التدريب</h2>
+            <div class="detail-item">
+                <p><strong>الطالب:</strong> {{ training_request.student.get_full_name }}</p>
+                <p><strong>جهة التدريب:</strong> {{ training_request.training_entity.name }}</p>
+                <p><strong>تاريخ الطلب:</strong> {{ training_request.request_date|date:"d-m-Y" }}</p>
+                <p><strong>رسالة الدافع:</strong> {{ training_request.motivation_letter }}</p>
+                {% if training_request.additional_documents %}
+                <p><strong>المستندات الإضافية:</strong> <a href="{{ training_request.additional_documents.url }}" target="_blank">تحميل</a></p>
+                {% endif %}
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button type="submit" name="action" value="approve" class="button">اعتماد</button>
+                    <button type="submit" name="action" value="reject" class="button delete-button">رفض</button>
+                    <a href="{% url 'training:application_requests' %}" class="button cancel-button">إلغاء</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

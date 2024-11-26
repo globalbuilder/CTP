@@ -1,0 +1,92 @@
+<!-- apps/training/templates/training/letter_template.html -->
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>خطاب طلب تدريب</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            direction: rtl;
+            text-align: right;
+            margin: 0 40px;
+        }
+        h1, h2, h3, h4, h5, h6, p {
+            margin: 0;
+            padding: 0;
+        }
+        .header, .footer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .content {
+            line-height: 1.8;
+        }
+        .signature {
+            margin-top: 50px;
+        }
+        .signature p {
+            margin-bottom: 5px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .table th, .table td {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+        .list {
+            margin-top: 20px;
+        }
+        .list li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>جامعة نجران</h2>
+        <h3>كلية علوم الحاسب ونظم المعلومات</h3>
+    </div>
+    <div class="content">
+        <p>سعادة مدير برنامج التدريب التعاوني للمرحلة الجامعية بـ {{ letter_request.training_entity.name }} حفظه الله</p>
+        <p>السلام عليكم ورحمة الله وبركاته وبعد،</p>
+        <p>بدايةً يطيب لكلية علوم الحاسب ونظم المعلومات بجامعة نجران أن تهديكم أطيب التحية والتقدير، كما يشرفها التعاون وإياكم بتفعيل برنامج التدريب التعاوني وذلك من خلال تطبيق سياسة التكاتف المثمر المعتمد على التخطيط الهادف سعياً منا ومن إدارتكم الموقرة في تأهيل الكوادر الشابة بالخبرة العملية اللازمة والتي تضمن لطلابنا خوض التجربة الوظيفية بتميز ونجاح.</p>
+        <p>كما نأمل من سعادتكم قبول مرشح الكلية الموضحة بياناته أدناه للتدريب في أحد قطاعاتكم الموقر خلال فترة الفصل الصيفي من العام {{ letter_request.start_date|date:"Y" }} ولمدة 8 أسابيع:</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>الرقم الجامعي</th>
+                    <th>رقم الهوية</th>
+                    <th>التخصص</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ letter_request.student.get_full_name }}</td>
+                    <td>{{ letter_request.student.student_profile.student_id }}</td>
+                    <td>{{ letter_request.student.student_profile.national_id }}</td>
+                    <td>{{ letter_request.student.student_profile.major }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>يبدأ التدريب بتاريخ {{ letter_request.start_date|date:"d-m-Y" }} إلى {{ letter_request.end_date|date:"d-m-Y" }}. كما نود إحاطة سعادتكم بأنه يتم تقييم الطالب بنهاية الفترة التدريبية وعليه نأمل من سعادتكم بإفادتنا بالآتي:</p>
+        <ol class="list">
+            <li>تقييم أسبوعي عن المهام التي تم إكمالها من قبل الطالب عن طريق إكمال النموذج الإلكتروني الذي سوف يرسل لسعادتكم في حال تم قبول الطلب.</li>
+            <li>تقييم شامل عند نهاية الفترة التدريبية عن طريق إكمال النموذج الإلكتروني الذي سوف يرسل لسعادتكم قبل نهاية الفترة التدريبية.</li>
+            <li>الخطة التدريبية مرفقة مع هذا الخطاب وهي تحتوي على عدد من المواضيع التي نرغب منكم تدريب طلابنا عليها.</li>
+        </ol>
+        <p>علماً بأن المشرف الأكاديمي الذي سيتولى الإشراف على الطالب أثناء فترة تدريبه من قبل كلية علوم الحاسب ونظم المعلومات بجامعة نجران سيكون من أحد أعضاء هيئة التدريس لدينا.</p>
+        <p>وتقبلوا خالص تحياتي وتقديري،</p>
+    </div>
+    <div class="signature">
+        <p>رئيس وحدة التدريب التعاوني</p>
+        <p>د. حمد علي أبوساق</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!-- apps/training/templates/training/delete_training_entity.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}حذف جهة التدريب{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="delete-section">
+            <h2>حذف جهة التدريب</h2>
+            <p>هل أنت متأكد من رغبتك في حذف جهة التدريب <strong>{{ entity.name }}</strong>؟ هذا الإجراء غير قابل للتراجع.</p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button type="submit" class="button delete-button">حذف</button>
+                    <a href="{% url 'training:manage_training_entities' %}" class="button cancel-button">إلغاء</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% load static %}
+
+<header>
+    <div class="header-container">
+        <!-- Left Side: Profile Icon and Username -->
+        <div class="header-left">
+            <a href="{% url 'accounts:profile' %}" class="{% if request.resolver_match.view_name == 'accounts:profile' %}active{% endif %}">
+                <i class="fas fa-user-circle user-icon"></i>
+                <span class="user-name">{{ user.get_full_name }}</span>
+            </a>
+        </div>
+
+        <!-- Center: University Logo -->
+        <div class="header-center">
+            <img src="{% static 'core/images/university_logo.png' %}" alt="شعار الجامعة">
+        </div>
+
+        <!-- Right Side: Messages and Logout Icons -->
+        <div class="header-right">
+            <!-- Messages Icon -->
+            <div class="messages-icon">
+                {% with messages_views='communications:inbox communications:compose_message communications:sent_messages communications:view_message' %}
+                <a href="{% url 'communications:inbox' %}" class="{% if request.resolver_match.view_name in messages_views %}active{% endif %}">
+                    <i class="fas fa-envelope"></i>
+                    {% if unread_messages_count > 0 %}
+                        <span class="badge">{{ unread_messages_count }}</span>
+                    {% endif %}
+                </a>
+                {% endwith %}
+            </div>
+
+            <!-- Logout Icon -->
+            <div class="logout-icon">
+                <a href="{% url 'accounts:logout' %}">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="logout-text">تسجيل الخروج</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>

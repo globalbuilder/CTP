@@ -1,0 +1,35 @@
+<!-- apps/accounts/templates/accounts/view_supervisor.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}عرض بيانات المشرف{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="view-section">
+            <h2>عرض بيانات المشرف</h2>
+            <div class="supervisor-details">
+                <p><strong>الرقم التعريفي:</strong> {{ supervisor.employee_id }}</p>
+                <p><strong>الاسم الكامل:</strong> {{ supervisor.user.get_full_name }}</p>
+                <p><strong>البريد الإلكتروني:</strong> {{ supervisor.user.email }}</p>
+                <p><strong>الجنس:</strong> {{ supervisor.get_gender_display }}</p>
+                <p><strong>رقم الجوال:</strong> {{ supervisor.contact_number }}</p>
+                <p><strong>القسم:</strong> {{ supervisor.department.name }}</p>
+                <p><strong>التخصص:</strong> {{ supervisor.specialization }}</p>
+                <p><strong>الحالة:</strong> {{ supervisor.status }}</p>
+            </div>
+            <div class="actions">
+                <a href="{% url 'accounts:edit_supervisor' supervisor.id %}" class="button">تعديل</a>
+                <a href="{% url 'accounts:delete_supervisor' supervisor.id %}" class="button delete-button">حذف</a>
+                <a href="{% url 'accounts:manage_supervisors' %}" class="button">عودة</a>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

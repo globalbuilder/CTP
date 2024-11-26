@@ -1,0 +1,28 @@
+<!-- apps/training/templates/training/add_training_entity.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}إضافة جهة تدريب{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="main-container">
+        <section class="form-section">
+            <h2>إضافة جهة تدريب</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="form-actions">
+                    <button type="submit" class="button">إضافة</button>
+                    <a href="{% url 'training:manage_training_entities' %}" class="button cancel-button">إلغاء</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

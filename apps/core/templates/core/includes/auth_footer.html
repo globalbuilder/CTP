@@ -1,0 +1,20 @@
+{% load static %}
+<footer>
+    <div class="footer-container">
+        <div class="project-logo">
+            <img src="{% static 'core/images/platform_logo.png' %}" alt="شعار المشروع">
+        </div>
+
+        <div class="footer-details">
+            <div class="footer_contact">
+                <a href="tel:+966123456789"><i class="fas fa-phone"></i></a>
+                <a href="https://wa.me/966123456789"><i class="fab fa-whatsapp"></i></a>
+                <a href="mailto:info@najran.edu.sa"><i class="fas fa-envelope"></i></a>
+                <a href="https://goo.gl/maps/najranuniversity"><i class="fas fa-map-marker-alt"></i></a>
+            </div>
+            <div class="footer-rights">
+                <p>جميع الحقوق محفوظة &copy; {{ current_year }}</p>
+            </div>
+        </div>
+    </div>
+</footer>
