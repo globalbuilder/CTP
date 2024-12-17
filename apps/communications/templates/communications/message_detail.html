@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}تفاصيل الرسالة{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'communications/css/communications.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<main>
+    <div class="main-container">
+        <section class="message-detail-section">
+            <h2>تفاصيل الرسالة</h2>
+            <div class="message-detail-box">
+                <p><strong>المرسل:</strong> {{ message.sender.get_full_name }}</p>
+                <p><strong>الموضوع:</strong> {{ message.subject }}</p>
+                <p><strong>تاريخ الإرسال:</strong> {{ message.sent_date|date:"d-m-Y H:i" }}</p>
+                <hr>
+                <p><strong>المحتوى:</strong></p>
+                <p>{{ message.body|linebreaks }}</p>
+                {% if message.attachment %}
+                <p><strong>المرفق:</strong> 
+                    <a href="{{ message.attachment.url }}" target="_blank" class="attachment-link">تحميل المرفق</a>
+                </p>
+                {% endif %}
+            </div>
+            <div class="actions">
+                <a href="{% url 'communications:inbox' %}" class="button">عودة إلى البريد الوارد</a>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

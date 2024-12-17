@@ -6,7 +6,7 @@
 {% block title %}معالجة طلب التدريب{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+<link rel="stylesheet" href="{% static 'training/css/training.css' %}">
 {% endblock %}
 
 {% block auth_content %}
@@ -28,10 +28,11 @@
                 <div class="form-actions">
                     <button type="submit" name="action" value="approve" class="button">اعتماد</button>
                     <button type="submit" name="action" value="reject" class="button delete-button">رفض</button>
-                    <a href="{% url 'training:application_requests' %}" class="button cancel-button">إلغاء</a>
+                    <a href="{% url 'training:training_requests_overview' %}" class="button cancel-button">إلغاء</a>
                 </div>
             </form>
         </section>
     </div>
 </main>
 {% endblock %}
+

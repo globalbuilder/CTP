@@ -1,4 +1,4 @@
-/* training.css */
+/* apps/training/static/training/css/training.css */
 
 /* Variables */
 :root {
@@ -9,21 +9,6 @@
     --white-color: #fff;
     --hover-button-color: #b48d09;
 }
-
-/* General Styles */
-/* body {
-    font-family: 'Arial', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
-    direction: rtl;
-    text-align: right;
-}
-
-.main-container {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-} */
 
 h2 {
     color: var(--primary-color);
@@ -46,10 +31,24 @@ strong {
     color: var(--primary-color);
 }
 
-/* Form Styles */
-form {
+.main-container {
+    padding: 20px;
+}
+
+.form-section,
+.requests-section,
+.details-section,
+.process-section,
+.entities-section,
+.delete-section {
     background-color: var(--white-color);
     padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+form {
+    background-color: var(--white-color);
     border-radius: 10px;
 }
 
@@ -75,19 +74,20 @@ input[type="file"] {
     font-size: 16px;
 }
 
-button,
-input[type="submit"] {
+.button {
     background-color: var(--secondary-color);
     color: var(--white-color);
-    padding: 12px 20px;
+    padding: 10px 20px;
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
 }
 
-button:hover,
-input[type="submit"]:hover {
+.button:hover {
     background-color: var(--hover-button-color);
 }
 
@@ -111,18 +111,18 @@ input[type="submit"]:hover {
     margin-bottom: 20px;
 }
 
-/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 table th,
 table td {
     border: 1px solid #ddd;
     padding: 12px;
-    text-align: center;
+    font-size: 16px;
 }
 
 table th {
@@ -134,41 +134,6 @@ table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.requests-table .button,
-.entities-table .button {
-    margin: 0 5px;
-}
-
-.button {
-    display: inline-block;
-    background-color: var(--secondary-color);
-    color: var(--white-color);
-    padding: 8px 12px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.button:hover {
-    background-color: var(--hover-button-color);
-}
-
-/* Sections */
-.form-section,
-.requests-section,
-.details-section,
-.process-section,
-.entities-section,
-.delete-section {
-    background-color: var(--white-color);
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.detail-item {
-    margin-bottom: 20px;
-}
-
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -178,18 +143,53 @@ table tr:nth-child(even) {
     margin-left: 10px;
 }
 
-/* Responsive Design */
+.tabs {
+    margin-top: 20px;
+}
+
+.tab-titles {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    justify-content: center;
+    gap: 20px;
+}
+
+.tab-titles li {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: var(--background-color);
+    font-size: 16px;
+}
+
+.tab-titles li.active {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+}
+
+.tab-content .tab {
+    display: none;
+}
+
+.tab-content .tab.active {
+    display: block;
+}
+
 @media (max-width: 768px) {
-    .main-container {
+    .form-actions .button {
+        margin-left: 5px;
+    }
+
+    table th,
+    table td {
+        font-size: 14px;
         padding: 10px;
     }
 
-    form,
-    table {
-        width: 100%;
-    }
-
-    .form-actions .button {
-        margin-left: 5px;
+    .tab-titles li {
+        font-size: 14px;
+        padding: 8px 15px;
     }
 }

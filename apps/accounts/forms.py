@@ -14,11 +14,19 @@ class StudentRegistrationForm(UserCreationForm):
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
 
 class StudentProfileForm(forms.ModelForm):
+    supervisor = forms.ModelChoiceField(
+        queryset=User.objects.filter(user_type='supervisor'),
+        required=False,
+        label='المشرف الأكاديمي',
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        empty_label="Select Supervisor"
+    )
+
     class Meta:
         model = StudentProfile
         fields = [
             'student_id', 'national_id', 'gender', 'contact_number', 'gpa',
-            'hours_completed', 'major', 'department', 'training_entity'
+            'hours_completed', 'major', 'department', 'supervisor', 'training_entity'
         ]
         widgets = {
             'student_id': forms.TextInput(attrs={'class': 'form-control'}),
@@ -41,8 +49,10 @@ class StudentProfileForm(forms.ModelForm):
             'major': 'التخصص',
             'department': 'القسم',
             'training_entity': 'جهة التدريب',
+            'supervisor': 'المشرف الأكاديمي'
         }
 
+        
 class SupervisorRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=30, label='الاسم الأول')

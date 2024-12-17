@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}إرسال رسالة{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'communications/css/communications.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<main>
+    <div class="main-container">
+        <section class="send-message-section">
+            <h2>إرسال رسالة جديدة</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="form-actions">
+                    <button type="submit" class="button">إرسال</button>
+                    <a href="{% url 'communications:inbox' %}" class="button cancel-button">إلغاء</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

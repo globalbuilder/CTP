@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}معالجة التقرير{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reports/css/reports.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<main>
+    <div class="main-container">
+        <section class="process-report-section">
+            <h2>معالجة التقرير</h2>
+            <p><strong>الطالب:</strong> {{ report.student.get_full_name }}</p>
+            <p><strong>نوع التقرير:</strong> {{ report.get_report_type_display }}</p>
+            <p><strong>تاريخ الرفع:</strong> {{ report.upload_date|date:"d-m-Y H:i" }}</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="action" value="accept" class="button">قبول</button>
+                <button type="submit" name="action" value="reject" class="button delete-button">رفض</button>
+                <a href="{% url 'reports:view_students_reports' %}" class="button cancel-button">إلغاء</a>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}

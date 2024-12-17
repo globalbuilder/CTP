@@ -1,0 +1,37 @@
+<!-- apps/training/templates/training/request_training.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}طلب تدريب - {{ entity.name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<main>
+    <div class="main-container">
+        <section class="form-section">
+            <h2>طلب تدريب في {{ entity.name }}</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="request-type-section">
+                    <p><strong>اختر نوع الطلب:</strong></p>
+                    {{ form.request_type }}
+                </div>
+                <hr>
+                {{ form.motivation_letter }}
+                {{ form.additional_documents }}
+                {{ form.start_date }}
+                {{ form.end_date }}
+                <div class="form-actions">
+                    <button type="submit" class="button">إرسال الطلب</button>
+                    <a href="{% url 'training:browse_entities' %}" class="button cancel-button">إلغاء</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+{% endblock %}
+

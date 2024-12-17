@@ -1,0 +1,170 @@
+/* evaluations.css */
+
+/* Variables */
+:root {
+    --primary-color: #1c3d6a;
+    --secondary-color: #cc9e0a;
+    --background-color: #f5f5f5;
+    --text-color: #333;
+    --white-color: #fff;
+    --hover-button-color: #b48d09;
+}
+
+/* General Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    background-color: var(--background-color);
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+strong {
+    color: var(--primary-color);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+table th {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Main Container */
+.main-container {
+    padding: 20px;
+}
+
+/* Forms and Buttons */
+form {
+    background-color: var(--white-color);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+fieldset {
+    border: none;
+    margin-bottom: 20px;
+}
+
+legend {
+    font-size: 18px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+textarea {
+    min-height: 100px;
+}
+
+/* Radio Buttons for Scores */
+.score-options {
+    text-align: center;
+    white-space: nowrap;
+}
+.score-options label {
+    margin: 0 10px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.score-options input[type="radio"] {
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* Action Buttons */
+.button,
+input[type="submit"] {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.button:hover,
+input[type="submit"]:hover {
+    background-color: var(--hover-button-color);
+}
+
+.cancel-button {
+    background-color: #6c757d;
+}
+.cancel-button:hover {
+    background-color: #5a6268;
+}
+
+/* Sections */
+.evaluate-section,
+.submit-evaluation-section,
+.view-evaluations-section,
+.training-entity-evals-section {
+    background-color: var(--white-color);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+/* Typography in Tables */
+.evaluate-table th,
+.criteria-table th,
+.evaluations-table th,
+.entity-evaluations-table th {
+    font-size: 16px;
+}
+
+.evaluate-table td,
+.criteria-table td,
+.evaluations-table td,
+.entity-evaluations-table td {
+    font-size: 14px;
+}
+
+.form-actions {
+    text-align: center;
+    margin-top: 20px;
+}

@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}عرض التقييمات{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'evaluations/css/evaluations.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<main>
+    <div class="main-container">
+        <section class="view-evaluations-section">
+            <h2>عرض التقييمات</h2>
+            <table class="evaluations-table">
+                <thead>
+                    <tr>
+                        <th>الطالب</th>
+                        <th>وحدة التدريب</th>
+                        <th>نوع التقييم</th>
+                        <th>تاريخ التقييم</th>
+                        <th>الدرجة الإجمالية</th>
+                        <th>المقيم</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for evaluation in evaluation %}
+                    <tr>
+                        <td>{{ evaluation.student.get_full_name }}</td>
+                        <td>{{ evaluation.training_entity.name }}</td>
+                        <td>
+                            {% if evaluation.evaluation_type == 'student' %}
+                                تقييم الطالب
+                            {% else %}
+                                تقييم جهة التدريب
+                            {% endif %}
+                        </td>
+                        <td>{{ evaluation.evaluation_date|date:"d-m-Y H:i" }}</td>
+                        <td>{{ evaluation.total_score }}</td>
+                        <td>{{ evaluation.evaluator.get_full_name }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">لا توجد تقييمات متاحة.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+{% endblock %}

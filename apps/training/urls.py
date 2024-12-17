@@ -7,16 +7,15 @@ app_name = 'training'
 
 urlpatterns = [
     # Student URLs
-    path('submit_training_request/', views.submit_training_request, name='submit_training_request'),
-    path('submit_letter_request/', views.submit_letter_request, name='submit_letter_request'),
+    path('browse_entities/', views.browse_training_entities, name='browse_entities'),
+    path('request_training/<int:entity_id>/', views.request_training, name='request_training'),
     path('my_requests/', views.view_my_requests, name='view_my_requests'),
     path('training_details/', views.training_details, name='training_details'),
     path('download_letter/<int:pk>/', views.download_letter, name='download_letter'),
 
     # Training Unit Head URLs
-    path('application_requests/', views.application_requests, name='application_requests'),
+    path('training_requests_overview/', views.training_requests_overview, name='training_requests_overview'),
     path('process_training_request/<int:pk>/', views.process_training_request, name='process_training_request'),
-    path('letter_requests/', views.letter_requests, name='letter_requests'),
     path('process_letter_request/<int:pk>/', views.process_letter_request, name='process_letter_request'),
 
     # Training Entity Management URLs

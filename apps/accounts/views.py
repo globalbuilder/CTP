@@ -142,21 +142,18 @@ def assign_supervisors(request):
         for key, value in request.POST.items():
             if key.startswith('supervisor_') and value:
                 student_id = key.split('_')[1]
-                supervisor_id = value
+                supervisor_user_id = value
                 student = get_object_or_404(StudentProfile, id=student_id)
-                supervisor = get_object_or_404(User, id=supervisor_id, user_type='supervisor')
-                # Assign supervisor to student
-                student.supervisor = supervisor
+                supervisor_user = get_object_or_404(User, id=supervisor_user_id, user_type='supervisor')
+                student.supervisor = supervisor_user
                 student.save()
-                messages.success(request, f'تم تعيين المشرف {supervisor.get_full_name()} للطالب {student.user.get_full_name()}.')
-
+                messages.success(request, f'تم تعيين المشرف {supervisor_user.get_full_name()} للطالب {student.user.get_full_name()} بنجاح.')
         return redirect('accounts:assign_supervisors')
     else:
         students = StudentProfile.objects.filter(supervisor__isnull=True)
-        supervisors = User.objects.filter(user_type='supervisor')
-
+        supervisors = User.objects.filter(user_type='supervisor')  # Ensuring these are User instances
     return render(request, 'accounts/assign_supervisors.html', {'students': students, 'supervisors': supervisors})
-
+    
 @login_required
 @supervisor_required
 def view_assigned_students(request):

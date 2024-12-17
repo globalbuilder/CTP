@@ -1,0 +1,54 @@
+<!-- apps/training/templates/training/browse_entities.html -->
+
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}تصفح جهات التدريب{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<main>
+    <div class="main-container">
+        <section class="entities-section">
+            <h2>جهات التدريب المتاحة</h2>
+            {% if entities %}
+            <table class="entities-table">
+                <thead>
+                    <tr>
+                        <th>اسم الجهة</th>
+                        <th>الوصف</th>
+                        <th>الفصل الدراسي</th>
+                        <th>الوظائف المتاحة</th>
+                        <th>متاح</th>
+                        <th>طلب تدريب</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.name }}</td>
+                        <td>{{ entity.description|default:"-" }}</td>
+                        <td>{{ entity.get_semester_display }}</td>
+                        <td>{{ entity.available_positions|default:"-" }}</td>
+                        <td>{{ entity.is_available|yesno:"نعم,لا" }}</td>
+                        <td>
+                            <a href="{% url 'training:request_training' entity.pk %}" class="button">طلب تدريب</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">لا توجد جهات تدريب متاحة حالياً.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>لا توجد جهات تدريب متاحة حالياً.</p>
+            {% endif %}
+        </section>
+    </div>
+</main>
+{% endblock %}

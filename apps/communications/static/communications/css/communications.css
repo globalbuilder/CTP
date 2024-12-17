@@ -1,0 +1,145 @@
+/* communications.css */
+
+/* Variables */
+:root {
+    --primary-color: #1c3d6a;
+    --secondary-color: #cc9e0a;
+    --background-color: #f5f5f5;
+    --text-color: #333;
+    --white-color: #fff;
+    --hover-button-color: #b48d09;
+}
+
+/* General Styles */
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+strong {
+    color: var(--primary-color);
+}
+
+.message-detail-section, .inbox-section, .send-message-section {
+    background-color: var(--white-color);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Table Styles for Inbox */
+
+.inbox-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.inbox-table th,
+.inbox-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.inbox-table th {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.inbox-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.inbox-table tr.unread td {
+    font-weight: bold;
+}
+
+.status-unread {
+    color: #d9534f;
+    font-weight: bold;
+}
+
+.status-read {
+    color: #5cb85c;
+    font-weight: bold;
+}
+
+/* Message Detail */
+
+.message-detail-box {
+    background-color: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.attachment-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.attachment-link:hover {
+    text-decoration: underline;
+}
+
+/* Form & Buttons */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-actions .button {
+    margin-left: 10px;
+}
+
+.button {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: var(--hover-button-color);
+}
+
+.cancel-button {
+    background-color: #6c757d;
+}
+
+.cancel-button:hover {
+    background-color: #5a6268;
+}
+
+.add-button {
+    background-color: var(--secondary-color);
+    margin: 10px 0;
+}
+
+.add-button:hover {
+    background-color: var(--hover-button-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .inbox-table th,
+    .inbox-table td {
+        font-size: 14px;
+    }
+
+    .form-actions .button {
+        margin-left: 5px;
+    }
+}

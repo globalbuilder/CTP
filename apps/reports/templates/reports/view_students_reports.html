@@ -1,0 +1,57 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}تقارير الطلاب{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reports/css/reports.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<main>
+    <div class="main-container">
+        <section class="students-reports-section">
+            <h2>تقارير الطلاب</h2>
+            <table class="reports-table">
+                <thead>
+                    <tr>
+                        <th>الطالب</th>
+                        <th>نوع التقرير</th>
+                        <th>تاريخ الرفع</th>
+                        <th>الحالة</th>
+                        <th>العمليات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for report in reports %}
+                    <tr>
+                        <td>{{ report.student.get_full_name }}</td>
+                        <td>{{ report.get_report_type_display }}</td>
+                        <td>{{ report.upload_date|date:"d-m-Y H:i" }}</td>
+                        <td>
+                            {% if report.status == 'pending' %}
+                                <span class="status-pending">قيد المراجعة</span>
+                            {% elif report.status == 'accepted' %}
+                                <span class="status-accepted">مقبول</span>
+                            {% elif report.status == 'rejected' %}
+                                <span class="status-rejected">مرفوض</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'reports:download' report.pk %}" class="button">تحميل</a>
+                            {% if report.status == 'pending' %}
+                                <a href="{% url 'reports:process_report' report.pk %}" class="button">معالجة</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">لا توجد تقارير للطلاب.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+{% endblock %}

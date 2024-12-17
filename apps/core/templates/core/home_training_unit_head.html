@@ -30,21 +30,21 @@
         <div class="card-icon">
             <i class="fas fa-file-alt"></i>
         </div>
-        <div class="card-details">
+        {% comment %} <div class="card-details">
             <h2>طلبات التدريب المعلقة</h2>
             <p>طلبات معلقة: {{ pending_training_requests }}</p>
             <a href="{% url 'training:application_requests' %}" class="card-link">عرض التفاصيل</a>
-        </div>
+        </div> {% endcomment %}
     </div>
     <div class="card">
         <div class="card-icon">
             <i class="fas fa-envelope-open-text"></i>
         </div>
-        <div class="card-details">
+        {% comment %} <div class="card-details">
             <h2>طلبات الخطابات المعلقة</h2>
             <p>طلبات معلقة: {{ pending_letter_requests }}</p>
             <a href="{% url 'training:letter_requests' %}" class="card-link">عرض التفاصيل</a>
-        </div>
+        </div> {% endcomment %}
     </div>
     <div class="card">
         <div class="card-icon">

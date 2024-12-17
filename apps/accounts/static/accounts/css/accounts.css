@@ -252,10 +252,29 @@ table tr:nth-child(even) {
 }
 
 .assign-table select {
-    width: 100%;
-    padding: 5px;
+    width: 100%;  /* Full width to match the column */
+    position: relative;  /* Ensure z-index applies */
+    z-index: 100;  /* Bring the dropdown above other content */
 }
 
+.assign-table th,
+.assign-table td {
+    padding: 12px;
+    text-align: center;
+    overflow: visible;  /* Ensure dropdowns are not clipped */
+}
+
+.assign-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    table-layout: auto;  /* Ensures that the table columns are not too restrictive */
+}
+
+/* Ensure the table row allows for overflow from the dropdown */
+table.assign-table tbody tr {
+    overflow: visible;  /* Prevent clipping of dropdown */
+}
 /* View, Edit, and Delete Sections */
 .view-section,
 .edit-section,

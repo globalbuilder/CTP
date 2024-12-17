@@ -71,7 +71,6 @@ header {
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 16px;
 }
 
 .header-right a:hover {
@@ -79,12 +78,14 @@ header {
 }
 
 .header-right i {
-    font-size: 24px;
+    font-size: 30px;
+    margin-left: 5px;
 }
 
-.logout-text {
-    display: none;
+.header-right .messages-icon {
+    margin-left: 10px;
 }
+
 
 .header-left a {
     color: var(--white-color);
@@ -92,22 +93,19 @@ header {
     align-items: center;
     gap: 5px;
     transition: color 0.3s;
+    font-size: 20px;
 }
 
 .header-left a i {
-    color: var(--white-color);
-    transition: color 0.3s;
+    font-size: 30px;
+    margin-left: 8px;
 }
 
-.header-left a:hover i,
-.header-left a.active i {
+.header-left a:hover,
+.header-left a.active {
     color: var(--secondary-color);
 }
 
-/* Show logout text on hover */
-.logout-icon a:hover .logout-text {
-    display: inline;
-}
 /* Messages Icon Styles */
 .messages-icon a {
     color: var(--white-color);

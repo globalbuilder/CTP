@@ -27,7 +27,6 @@ class TrainingEntity(models.Model):
     contact_phone = models.CharField(max_length=20, verbose_name='رقم الهاتف للتواصل')
     website = models.URLField(blank=True, null=True, verbose_name='الموقع الإلكتروني')
     available_positions = models.TextField(blank=True, null=True, verbose_name='الوظائف المتاحة')
-
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='both', verbose_name='الجنس')
     min_hours = models.PositiveIntegerField(default=0, verbose_name='الحد الأدنى من الساعات')
     departments = models.ManyToManyField(Department, verbose_name='الأقسام')
@@ -55,28 +54,13 @@ class TrainingRequest(models.Model):
         on_delete=models.CASCADE,
         verbose_name='جهة التدريب'
     )
-    request_date = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='تاريخ الطلب'
-    )
-    status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default='pending',
-        verbose_name='الحالة'
-    )
-    motivation_letter = models.TextField(
-        verbose_name='رسالة الدافع'
-    )
-    additional_documents = models.FileField(
-        upload_to='training_requests/',
-        null=True,
-        blank=True,
-        verbose_name='المستندات الإضافية'
-    )
+    request_date = models.DateTimeField(auto_now_add=True, verbose_name='تاريخ الطلب')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name='الحالة')
+    motivation_letter = models.TextField(verbose_name='رسالة الدافع')
+    additional_documents = models.FileField(upload_to='training_requests/', null=True, blank=True, verbose_name='المستندات الإضافية')
 
     def __str__(self):
-        return f"طلب تدريب من {self.student.get_full_name()} إلى {self.training_entity.name}"
+        return f"طلب تدريب (مباشر) من {self.student.get_full_name()} إلى {self.training_entity.name}"
 
 class LetterRequest(models.Model):
     STATUS_CHOICES = (
@@ -97,66 +81,31 @@ class LetterRequest(models.Model):
     )
     start_date = models.DateField(verbose_name='تاريخ البدء')
     end_date = models.DateField(verbose_name='تاريخ الانتهاء')
-    request_date = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='تاريخ الطلب'
-    )
-    status = models.CharField(
-        max_length=20,
-        choices=STATUS_CHOICES,
-        default='pending',
-        verbose_name='الحالة'
-    )
-    letter_file = models.FileField(
-        upload_to='letters/',
-        null=True,
-        blank=True,
-        verbose_name='ملف الخطاب'
-    )
+    request_date = models.DateTimeField(auto_now_add=True, verbose_name='تاريخ الطلب')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name='الحالة')
+    letter_file = models.FileField(upload_to='letters/', null=True, blank=True, verbose_name='ملف الخطاب')
 
     def __str__(self):
         return f"طلب خطاب من {self.student.get_full_name()} إلى {self.training_entity.name}"
 
 class TrainingDetail(models.Model):
-    student = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='student_training_details',
-        limit_choices_to={'user_type': 'student'},
-        verbose_name='الطالب'
-    )
-    training_entity = models.ForeignKey(
-        TrainingEntity,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        verbose_name='جهة التدريب'
-    )
-    supervisor = models.ForeignKey(
-        User,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='supervised_training_details',
-        limit_choices_to={'user_type': 'supervisor'},
-        verbose_name='المشرف الأكاديمي'
-    )
-    start_date = models.DateField(
-        verbose_name='تاريخ البدء'
-    )
-    end_date = models.DateField(
-        verbose_name='تاريخ الانتهاء'
-    )
-    tasks_assigned = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name='المهام الموكلة'
-    )
-    skills_learned = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name='المهارات المكتسبة'
-    )
+    student = models.ForeignKey(User,
+                                on_delete=models.CASCADE,
+                                related_name='student_training_details',
+                                limit_choices_to={'user_type': 'student'},
+                                verbose_name='الطالب')
+    training_entity = models.ForeignKey(TrainingEntity, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='جهة التدريب')
+    supervisor = models.ForeignKey(User,
+                                   on_delete=models.SET_NULL,
+                                   null=True,
+                                   blank=True,
+                                   related_name='supervised_training_details',
+                                   limit_choices_to={'user_type': 'supervisor'},
+                                   verbose_name='المشرف الأكاديمي')
+    start_date = models.DateField(verbose_name='تاريخ البدء')
+    end_date = models.DateField(verbose_name='تاريخ الانتهاء')
+    tasks_assigned = models.TextField(blank=True, null=True, verbose_name='المهام الموكلة')
+    skills_learned = models.TextField(blank=True, null=True, verbose_name='المهارات المكتسبة')
 
     def __str__(self):
         return f"تفاصيل التدريب للطالب {self.student.get_full_name()}"

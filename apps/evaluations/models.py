@@ -6,40 +6,23 @@ from training.models import TrainingEntity
 
 User = get_user_model()
 
-class EvaluationCriteria(models.Model):
-    description = models.CharField(
-        max_length=255,
-        verbose_name='الوصف'
-    )
-    max_score = models.PositiveIntegerField(
-        default=10,
-        verbose_name='الحد الأقصى للدرجة'
-    )
+SCORE_CHOICES = (
+    (10, 'ممتاز'),
+    (8, 'جيد جدا'),
+    (6, 'جيد'),
+    (4, 'مقبول'),
+    (2, 'ضعيف'),
+)
 
-    def __str__(self):
-        return self.description
-
-class EvaluationTemplate(models.Model):
-    name = models.CharField(
-        max_length=100,
-        verbose_name='اسم النموذج'
-    )
-    description = models.TextField(
-        verbose_name='وصف النموذج'
-    )
-    criteria = models.ManyToManyField(
-        EvaluationCriteria,
-        verbose_name='المعايير'
-    )
-
-    def __str__(self):
-        return self.name
+EVALUATION_TYPE_CHOICES = (
+    ('student', 'تقييم الطالب'),
+    ('entity', 'تقييم جهة التدريب'),
+)
 
 class Evaluation(models.Model):
     evaluator = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        limit_choices_to={'user_type__in': ['supervisor', 'head']},
         verbose_name='المقيم'
     )
     student = models.ForeignKey(
@@ -58,14 +41,28 @@ class Evaluation(models.Model):
         auto_now_add=True,
         verbose_name='تاريخ التقييم'
     )
-    template = models.ForeignKey(
-        EvaluationTemplate,
-        on_delete=models.SET_NULL,
-        null=True,
-        verbose_name='نموذج التقييم'
+    evaluation_type = models.CharField(
+        max_length=10,
+        choices=EVALUATION_TYPE_CHOICES,
+        verbose_name='نوع التقييم'
     )
+
+    # 10 fixed criteria fields
+    c1_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 1')
+    c2_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 2')
+    c3_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 3')
+    c4_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 4')
+    c5_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 5')
+    c6_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 6')
+    c7_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 7')
+    c8_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 8')
+    c9_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 9')
+    c10_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 10')
+
     total_score = models.PositiveIntegerField(
-        verbose_name='الدرجة الإجمالية'
+        verbose_name='الدرجة الإجمالية',
+        blank=True,
+        null=True,
     )
     comments = models.TextField(
         blank=True,
@@ -73,24 +70,17 @@ class Evaluation(models.Model):
         verbose_name='التعليقات'
     )
 
-    def __str__(self):
-        return f"تقييم {self.student.get_full_name()} بواسطة {self.evaluator.get_full_name()}"
-
-class EvaluationItem(models.Model):
-    evaluation = models.ForeignKey(
-        Evaluation,
-        on_delete=models.CASCADE,
-        related_name='items',
-        verbose_name='التقييم'
-    )
-    criteria = models.ForeignKey(
-        EvaluationCriteria,
-        on_delete=models.CASCADE,
-        verbose_name='المعيار'
-    )
-    score = models.PositiveIntegerField(
-        verbose_name='الدرجة'
-    )
+    def save(self, *args, **kwargs):
+        # Calculate total score
+        self.total_score = (
+            self.c1_score + self.c2_score + self.c3_score + self.c4_score +
+            self.c5_score + self.c6_score + self.c7_score + self.c8_score +
+            self.c9_score + self.c10_score
+        )
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.criteria.description} - درجة: {self.score}"
+        if self.evaluation_type == 'student':
+            return f"تقييم الطالب {self.student.get_full_name()} بواسطة {self.evaluator.get_full_name()}"
+        else:
+            return f"تقييم جهة التدريب {self.training_entity.name} بواسطة {self.evaluator.get_full_name()}"

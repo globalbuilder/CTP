@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}تقييم الطلاب{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'evaluations/css/evaluations.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<main>
+    <div class="main-container">
+        <section class="evaluate-section">
+            <h2>تقييم الطلاب</h2>
+            <table class="evaluate-table">
+                <thead>
+                    <tr>
+                        <th>الرقم الجامعي</th>
+                        <th>اسم الطالب</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>العمليات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.student_profile.student_id }}</td>
+                        <td>{{ student.get_full_name }}</td>
+                        <td>{{ student.email }}</td>
+                        <td>
+                            <a href="{% url 'evaluations:submit_evaluation' student.id %}" class="button">تقديم تقييم</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">لا يوجد طلاب بحاجة إلى تقييم.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+{% endblock %}

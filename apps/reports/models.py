@@ -7,9 +7,16 @@ User = get_user_model()
 
 class Report(models.Model):
     REPORT_TYPE_CHOICES = (
-        ('weekly', 'أسبوعي'),
-        ('final', 'نهائي'),
+        ('weekly', 'تقرير أسبوعي'),
+        ('final', 'تقرير نهائي'),
     )
+
+    STATUS_CHOICES = (
+        ('pending', 'قيد المراجعة'),
+        ('accepted', 'مقبول'),
+        ('rejected', 'مرفوض'),
+    )
+
     student = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -21,36 +28,20 @@ class Report(models.Model):
         choices=REPORT_TYPE_CHOICES,
         verbose_name='نوع التقرير'
     )
-    upload_date = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='تاريخ الرفع'
-    )
     file = models.FileField(
         upload_to='reports/',
         verbose_name='الملف'
     )
-    comments = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name='التعليقات'
-    )
-
-    def __str__(self):
-        return f"{self.student.get_full_name()} - {self.get_report_type_display()} تقرير"
-
-class ReportArchive(models.Model):
-    report = models.ForeignKey(
-        Report,
-        on_delete=models.CASCADE,
-        verbose_name='التقرير'
-    )
-    archived_date = models.DateTimeField(
+    upload_date = models.DateTimeField(
         auto_now_add=True,
-        verbose_name='تاريخ الأرشفة'
+        verbose_name='تاريخ الرفع'
     )
-    reason_for_archival = models.TextField(
-        verbose_name='سبب الأرشفة'
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='pending',
+        verbose_name='حالة التقرير'
     )
 
     def __str__(self):
-        return f"تقرير مؤرشف - {self.report}"
+        return f"{self.student.get_full_name()} - {self.get_report_type_display()} ({self.get_status_display()})"

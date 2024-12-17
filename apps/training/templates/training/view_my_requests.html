@@ -6,7 +6,7 @@
 {% block title %}طلباتي{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+<link rel="stylesheet" href="{% static 'training/css/training.css' %}">
 {% endblock %}
 
 {% block auth_content %}
@@ -14,7 +14,8 @@
     <div class="main-container">
         <section class="requests-section">
             <h2>طلباتي</h2>
-            <h3>طلبات التدريب</h3>
+
+            <h3>طلبات التدريب المباشر</h3>
             <table class="requests-table">
                 <thead>
                     <tr>
@@ -32,7 +33,7 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="3">لا توجد طلبات تدريب.</td>
+                        <td colspan="3">لا توجد طلبات تدريب مباشرة.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -58,7 +59,7 @@
                             {% if letter.status == 'approved' %}
                             <a href="{% url 'training:download_letter' letter.pk %}" class="button">تحميل الخطاب</a>
                             {% else %}
-                            لا يوجد
+                            -
                             {% endif %}
                         </td>
                     </tr>
@@ -73,3 +74,4 @@
     </div>
 </main>
 {% endblock %}
+

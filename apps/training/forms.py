@@ -1,73 +1,12 @@
 # apps/training/forms.py
 
 from django import forms
-from .models import TrainingRequest, LetterRequest, TrainingDetail, TrainingEntity
-from accounts.models import StudentProfile
+from .models import TrainingEntity
 
-class TrainingRequestForm(forms.ModelForm):
-    class Meta:
-        model = TrainingRequest
-        fields = ['training_entity', 'motivation_letter', 'additional_documents']
-        widgets = {
-            'training_entity': forms.Select(attrs={'class': 'form-control'}),
-            'motivation_letter': forms.Textarea(attrs={'class': 'form-control'}),
-            'additional_documents': forms.FileInput(attrs={'class': 'form-control'}),
-        }
-        labels = {
-            'training_entity': 'جهة التدريب',
-            'motivation_letter': 'رسالة الدافع',
-            'additional_documents': 'المستندات الإضافية',
-        }
-
-    def __init__(self, *args, **kwargs):
-        student = kwargs.pop('student', None)
-        super().__init__(*args, **kwargs)
-        queryset = TrainingEntity.objects.filter(is_available=True, available_slots__gt=0)
-        if student:
-            # Filter by gender
-            if student.gender:
-                if student.gender == 'male':
-                    queryset = queryset.filter(gender__in=['male', 'both'])
-                elif student.gender == 'female':
-                    queryset = queryset.filter(gender__in=['female', 'both'])
-            # Filter by departments
-            if student.department:
-                queryset = queryset.filter(departments=student.department)
-            # Filter by min_hours
-            queryset = queryset.filter(min_hours__lte=student.hours_completed)
-        self.fields['training_entity'].queryset = queryset
-
-class LetterRequestForm(forms.ModelForm):
-    class Meta:
-        model = LetterRequest
-        fields = ['training_entity', 'start_date', 'end_date']
-        widgets = {
-            'training_entity': forms.Select(attrs={'class': 'form-control'}),
-            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-        }
-        labels = {
-            'training_entity': 'جهة التدريب',
-            'start_date': 'تاريخ البدء',
-            'end_date': 'تاريخ الانتهاء',
-        }
-
-class TrainingDetailForm(forms.ModelForm):
-    class Meta:
-        model = TrainingDetail
-        fields = ['start_date', 'end_date', 'tasks_assigned', 'skills_learned']
-        widgets = {
-            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'tasks_assigned': forms.Textarea(attrs={'class': 'form-control'}),
-            'skills_learned': forms.Textarea(attrs={'class': 'form-control'}),
-        }
-        labels = {
-            'start_date': 'تاريخ البدء',
-            'end_date': 'تاريخ الانتهاء',
-            'tasks_assigned': 'المهام الموكلة',
-            'skills_learned': 'المهارات المكتسبة',
-        }
+REQUEST_TYPE_CHOICES = (
+    ('direct', 'طلب تدريب مباشر'),
+    ('letter', 'طلب خطاب تدريب'),
+)
 
 class TrainingEntityForm(forms.ModelForm):
     class Meta:
@@ -109,3 +48,18 @@ class TrainingEntityForm(forms.ModelForm):
             'semester': 'الفصل الدراسي',
             'is_available': 'متاح للطلاب',
         }
+        
+class UnifiedTrainingRequestForm(forms.Form):
+    request_type = forms.ChoiceField(choices=REQUEST_TYPE_CHOICES, widget=forms.RadioSelect, label='نوع الطلب')
+    motivation_letter = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), label='رسالة الدافع', required=False)
+    additional_documents = forms.FileField(widget=forms.FileInput(attrs={'class': 'form-control'}), label='المستندات الإضافية', required=False)
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}), label='تاريخ البدء', required=False)
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}), label='تاريخ الانتهاء', required=False)
+
+    def __init__(self, *args, **kwargs):
+        student = kwargs.pop('student', None)
+        single_entity = kwargs.pop('single_entity', None)
+        super().__init__(*args, **kwargs)
+        # We already have the entity from the URL, so no need to filter here.
+        # The student and single_entity parameters are just for future validation if needed.
+        # If we needed to do additional checks, we could do them here.

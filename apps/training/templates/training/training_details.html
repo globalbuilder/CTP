@@ -6,7 +6,7 @@
 {% block title %}تفاصيل التدريب{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'training/css/training.css' %}">
+<link rel="stylesheet" href="{% static 'training/css/training.css' %}">
 {% endblock %}
 
 {% block auth_content %}
@@ -20,8 +20,8 @@
                 <p><strong>المشرف الأكاديمي:</strong> {{ training_detail.supervisor.get_full_name }}</p>
                 <p><strong>تاريخ البدء:</strong> {{ training_detail.start_date|date:"d-m-Y" }}</p>
                 <p><strong>تاريخ الانتهاء:</strong> {{ training_detail.end_date|date:"d-m-Y" }}</p>
-                <p><strong>المهام الموكلة:</strong> {{ training_detail.tasks_assigned }}</p>
-                <p><strong>المهارات المكتسبة:</strong> {{ training_detail.skills_learned }}</p>
+                <p><strong>المهام الموكلة:</strong> {{ training_detail.tasks_assigned|default:"-" }}</p>
+                <p><strong>المهارات المكتسبة:</strong> {{ training_detail.skills_learned|default:"-" }}</p>
             </div>
             {% else %}
             <p>لا توجد تفاصيل متاحة للتدريب.</p>
@@ -30,3 +30,4 @@
     </div>
 </main>
 {% endblock %}
+

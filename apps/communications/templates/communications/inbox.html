@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}الرسائل الواردة{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'communications/css/communications.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<main>
+    <div class="main-container">
+        <section class="inbox-section">
+            <h2>الرسائل الواردة</h2>
+            <table class="inbox-table">
+                <thead>
+                    <tr>
+                        <th>المرسل</th>
+                        <th>الموضوع</th>
+                        <th>تاريخ الإرسال</th>
+                        <th>الحالة</th>
+                        <th>العمليات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for msg in messages %}
+                    <tr class="{% if not msg.read %}unread{% endif %}">
+                        <td>{{ msg.sender.get_full_name }}</td>
+                        <td>{{ msg.subject }}</td>
+                        <td>{{ msg.sent_date|date:"d-m-Y H:i" }}</td>
+                        <td>
+                            {% if msg.read %}
+                            <span class="status-read">مقروءة</span>
+                            {% else %}
+                            <span class="status-unread">غير مقروءة</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'communications:message_detail' msg.pk %}" class="button">عرض</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">لا توجد رسائل واردة.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="actions">
+                <a href="{% url 'communications:send_message' %}" class="button add-button">إرسال رسالة جديدة</a>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}

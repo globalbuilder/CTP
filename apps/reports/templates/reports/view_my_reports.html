@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}عرض تقاريري{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'reports/css/reports.css' %}">
+{% endblock %}
+
+{% block auth_content %}
+<main>
+    <div class="main-container">
+        <section class="my-reports-section">
+            <h2>تقاريري</h2>
+            <table class="reports-table">
+                <thead>
+                    <tr>
+                        <th>نوع التقرير</th>
+                        <th>تاريخ الرفع</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for report in reports %}
+                    <tr>
+                        <td>{{ report.get_report_type_display }}</td>
+                        <td>{{ report.upload_date|date:"d-m-Y H:i" }}</td>
+                        <td>
+                            {% if report.status == 'pending' %}
+                                <span class="status-pending">قيد المراجعة</span>
+                            {% elif report.status == 'accepted' %}
+                                <span class="status-accepted">مقبول</span>
+                            {% elif report.status == 'rejected' %}
+                                <span class="status-rejected">مرفوض</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">لا توجد تقارير مرفوعة.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+{% endblock %}

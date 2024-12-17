@@ -27,3 +27,4 @@ class TrainingDetailAdmin(admin.ModelAdmin):
     list_display = ('student', 'training_entity', 'supervisor', 'start_date', 'end_date')
     list_filter = ('training_entity',)
     search_fields = ('student__username', 'supervisor__username')
+

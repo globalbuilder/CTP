@@ -25,9 +25,11 @@
                 {% csrf_token %}
                 <button type="submit" name="action" value="approve" class="button">اعتماد</button>
                 <button type="submit" name="action" value="reject" class="button reject-button">رفض</button>
-                <a href="{% url 'training:letter_requests' %}" class="button cancel-button">عودة</a>
+                <a href="{% url 'training:training_requests_overview' %}" class="button cancel-button">عودة</a>
             </form>
         </section>
     </div>
 </main>
 {% endblock %}
+
+

@@ -42,10 +42,10 @@
 <div class="quick-actions">
     <h2>الوصول السريع</h2>
     <div class="actions-grid">
-        <a href="{% url 'training:submit_training_request' %}" class="action-item">
+        {% comment %} <a href="{% url 'training:submit_training_request' %}" class="action-item">
             <i class="fas fa-file-alt"></i>
             <span>تقديم طلب تدريب</span>
-        </a>
+        </a> {% endcomment %}
         <a href="{% url 'reports:upload_report' %}" class="action-item">
             <i class="fas fa-file-upload"></i>
             <span>رفع تقرير</span>
