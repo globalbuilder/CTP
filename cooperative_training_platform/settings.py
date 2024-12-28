@@ -69,7 +69,7 @@ WSGI_APPLICATION = 'cooperative_training_platform.wsgi.application'
 # Database configuration using env
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': env('DB_NAME'),
         'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
