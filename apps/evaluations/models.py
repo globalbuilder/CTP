@@ -20,55 +20,28 @@ EVALUATION_TYPE_CHOICES = (
 )
 
 class Evaluation(models.Model):
-    evaluator = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name='المقيم'
-    )
-    student = models.ForeignKey(
-        User,
-        related_name='evaluations',
-        on_delete=models.CASCADE,
-        limit_choices_to={'user_type': 'student'},
-        verbose_name='الطالب'
-    )
-    training_entity = models.ForeignKey(
-        TrainingEntity,
-        on_delete=models.CASCADE,
-        verbose_name='وحدة التدريب'
-    )
-    evaluation_date = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='تاريخ التقييم'
-    )
+    evaluator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='المقيم')
+    student = models.ForeignKey(User, related_name='evaluations', on_delete=models.CASCADE, limit_choices_to={'user_type': 'student'}, verbose_name='الطالب')
+    training_entity = models.ForeignKey(TrainingEntity, on_delete=models.CASCADE, verbose_name='وحدة التدريب')
+    evaluation_date = models.DateTimeField(auto_now_add=True, verbose_name='تاريخ التقييم')
     evaluation_type = models.CharField(
         max_length=10,
         choices=EVALUATION_TYPE_CHOICES,
-        verbose_name='نوع التقييم'
+        verbose_name='نوع التقييم',
+        default='student'  # Provide a sensible default
     )
-
-    # 10 fixed criteria fields
-    c1_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 1')
-    c2_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 2')
-    c3_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 3')
-    c4_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 4')
-    c5_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 5')
-    c6_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 6')
-    c7_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 7')
-    c8_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 8')
-    c9_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 9')
-    c10_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 10')
-
-    total_score = models.PositiveIntegerField(
-        verbose_name='الدرجة الإجمالية',
-        blank=True,
-        null=True,
-    )
-    comments = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name='التعليقات'
-    )
+    c1_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 1', default=10)
+    c2_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 2', default=10)
+    c3_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 3', default=10)
+    c4_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 4', default=10)
+    c5_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 5', default=10)
+    c6_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 6', default=10)
+    c7_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 7', default=10)
+    c8_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 8', default=10)
+    c9_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 9', default=10)
+    c10_score = models.PositiveIntegerField(choices=SCORE_CHOICES, verbose_name='المعيار 10', default=10)
+    total_score = models.PositiveIntegerField(verbose_name='الدرجة الإجمالية', blank=True, null=True)
+    comments = models.TextField(blank=True, null=True, verbose_name='التعليقات')
 
     def save(self, *args, **kwargs):
         # Calculate total score

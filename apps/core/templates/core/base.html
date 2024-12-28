@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}منصة التدريب التعاوني{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Load common CSS -->
+
     {% block common_css %}
         <!-- Font Awesome and Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
             rel="stylesheet"
         >
         <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
         {% if user.is_authenticated %}
             <!-- Authenticated Layout CSS -->
@@ -38,11 +38,17 @@
         <div class="main-container">
             {% include 'core/includes/sidebar.html' %}
             <div class="section-container">
+
                 {% if messages %}
-                    {% for message in messages %}
-                        <p class="message">{{ message }}</p>
-                    {% endfor %}
+                    <div class="message-container">
+                        {% for message in messages %}
+                            <div class="message {{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
                 {% endif %}
+
                 {% block auth_content %}{% endblock %}
             </div>
         </div>
@@ -50,11 +56,17 @@
         {% include 'core/includes/auth_footer.html' %}
     {% else %}
         {% include 'core/includes/guest_header.html' %}
+
         {% if messages %}
-            {% for message in messages %}
-                <p class="message">{{ message }}</p>
-            {% endfor %}
+            <div class="message-container">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
         {% endif %}
+
         {% block guest_content %}{% endblock %}
         {% include 'core/includes/guest_footer.html' %}
     {% endif %}

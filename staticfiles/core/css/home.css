@@ -1,0 +1,23 @@
+/* home.css */
+
+/* Home Page Specific Styles */
+.home-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.home-container h1 {
+    font-size: 36px;
+    color: var(--primary-color);
+}
+
+.home-container p {
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+.home-container .platform-logo {
+    margin-top: 30px;
+    height: 150px;
+    width: auto;
+}

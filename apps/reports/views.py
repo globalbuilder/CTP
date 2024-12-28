@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Report
+from accounts.models import StudentProfile
 from .forms import ReportUploadForm
 from accounts.decorators import student_required, supervisor_required
 from django.http import HttpResponse
@@ -34,9 +35,19 @@ def view_my_reports(request):
 @login_required
 @supervisor_required
 def view_students_reports(request):
-    # Supervisor views reports of their assigned students
-    students = request.user.supervisor_profile.supervised_students.all()
-    reports = Report.objects.filter(student__in=students)
+    # Get the current supervisor user
+    current_user = request.user
+
+    # Get all StudentProfiles supervised by the current user
+    students_profiles = StudentProfile.objects.filter(supervisor=current_user)
+
+    # Extract the related User objects for these students
+    student_users = students_profiles.values_list('user', flat=True)
+
+    # Get all reports associated with these User objects
+    reports = Report.objects.filter(student_id__in=student_users)
+
+    # Render the response
     return render(request, 'reports/view_students_reports.html', {'reports': reports})
 
 @login_required

@@ -38,7 +38,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{% url 'reports:download' report.pk %}" class="button">تحميل</a>
+                            <a href="{% url 'reports:download_report' report.pk %}" class="button">تحميل</a>
                             {% if report.status == 'pending' %}
                                 <a href="{% url 'reports:process_report' report.pk %}" class="button">معالجة</a>
                             {% endif %}
@@ -55,3 +55,4 @@
     </div>
 </main>
 {% endblock %}
+
