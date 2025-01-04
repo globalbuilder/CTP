@@ -1,12 +1,57 @@
 # apps/training/forms.py
 
 from django import forms
-from .models import TrainingEntity
+from .models import TrainingEntity, LetterRequest
 
-REQUEST_TYPE_CHOICES = (
-    ('direct', 'طلب تدريب مباشر'),
-    ('letter', 'طلب خطاب تدريب'),
-)
+class UnifiedTrainingRequestForm(forms.Form):
+    motivation_letter = forms.CharField(
+        widget=forms.Textarea(attrs={'class': 'form-control'}),
+        label='رسالة الدافع',
+        required=False
+    )
+    additional_documents = forms.FileField(
+        widget=forms.FileInput(attrs={'class': 'form-control'}),
+        label='المستندات الإضافية',
+        required=False
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.student = kwargs.pop('student', None)
+        self.single_entity = kwargs.pop('single_entity', None)
+        super().__init__(*args, **kwargs)
+
+
+class LetterRequestForm(forms.ModelForm):
+    class Meta:
+        model = LetterRequest
+        fields = [
+            'entity_name',
+            'entity_address',
+            'entity_contact_person',
+            'entity_contact_email',
+            'entity_contact_phone',
+            'start_date',
+            'end_date',
+        ]
+        widgets = {
+            'entity_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'entity_address': forms.Textarea(attrs={'class': 'form-control'}),
+            'entity_contact_person': forms.TextInput(attrs={'class': 'form-control'}),
+            'entity_contact_email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'entity_contact_phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'start_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'end_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        }
+        labels = {
+            'entity_name': 'اسم جهة التدريب',
+            'entity_address': 'عنوان جهة التدريب',
+            'entity_contact_person': 'الشخص المسؤول',
+            'entity_contact_email': 'البريد الإلكتروني للتواصل',
+            'entity_contact_phone': 'رقم الهاتف للتواصل',
+            'start_date': 'تاريخ البدء',
+            'end_date': 'تاريخ الانتهاء',
+        }
+
 
 class TrainingEntityForm(forms.ModelForm):
     class Meta:
@@ -48,18 +93,3 @@ class TrainingEntityForm(forms.ModelForm):
             'semester': 'الفصل الدراسي',
             'is_available': 'متاح للطلاب',
         }
-        
-class UnifiedTrainingRequestForm(forms.Form):
-    request_type = forms.ChoiceField(choices=REQUEST_TYPE_CHOICES, widget=forms.RadioSelect, label='نوع الطلب')
-    motivation_letter = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), label='رسالة الدافع', required=False)
-    additional_documents = forms.FileField(widget=forms.FileInput(attrs={'class': 'form-control'}), label='المستندات الإضافية', required=False)
-    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}), label='تاريخ البدء', required=False)
-    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}), label='تاريخ الانتهاء', required=False)
-
-    def __init__(self, *args, **kwargs):
-        student = kwargs.pop('student', None)
-        single_entity = kwargs.pop('single_entity', None)
-        super().__init__(*args, **kwargs)
-        # We already have the entity from the URL, so no need to filter here.
-        # The student and single_entity parameters are just for future validation if needed.
-        # If we needed to do additional checks, we could do them here.

@@ -37,6 +37,7 @@ class TrainingEntity(models.Model):
     def __str__(self):
         return self.name
 
+
 class TrainingRequest(models.Model):
     STATUS_CHOICES = (
         ('pending', 'معلق'),
@@ -60,7 +61,7 @@ class TrainingRequest(models.Model):
     additional_documents = models.FileField(upload_to='training_requests/', null=True, blank=True, verbose_name='المستندات الإضافية')
 
     def __str__(self):
-        return f"طلب تدريب (مباشر) من {self.student.get_full_name()} إلى {self.training_entity.name}"
+        return f"طلب تدريب من {self.student.get_full_name()} إلى {self.training_entity.name}"
 
 class LetterRequest(models.Model):
     STATUS_CHOICES = (
@@ -74,11 +75,32 @@ class LetterRequest(models.Model):
         limit_choices_to={'user_type': 'student'},
         verbose_name='الطالب'
     )
-    training_entity = models.ForeignKey(
-        TrainingEntity,
-        on_delete=models.CASCADE,
-        verbose_name='جهة التدريب'
+
+    entity_name = models.CharField(
+        max_length=200,
+        default="N/A",         # <-- default value
+        verbose_name='اسم جهة التدريب'
     )
+    entity_address = models.CharField(
+        max_length=300,
+        default="N/A",         # <-- default value
+        verbose_name='عنوان جهة التدريب'
+    )
+    entity_contact_person = models.CharField(
+        max_length=100,
+        default="N/A",         # <-- default value
+        verbose_name='الشخص المسؤول'
+    )
+    entity_contact_email = models.EmailField(
+        default="example@example.com",  # <-- default value
+        verbose_name='البريد الإلكتروني للتواصل'
+    )
+    entity_contact_phone = models.CharField(
+        max_length=20,
+        default="N/A",         # <-- default value
+        verbose_name='رقم الهاتف للتواصل'
+    )
+
     start_date = models.DateField(verbose_name='تاريخ البدء')
     end_date = models.DateField(verbose_name='تاريخ الانتهاء')
     request_date = models.DateTimeField(auto_now_add=True, verbose_name='تاريخ الطلب')
@@ -86,22 +108,33 @@ class LetterRequest(models.Model):
     letter_file = models.FileField(upload_to='letters/', null=True, blank=True, verbose_name='ملف الخطاب')
 
     def __str__(self):
-        return f"طلب خطاب من {self.student.get_full_name()} إلى {self.training_entity.name}"
+        return f"طلب خطاب من {self.student.get_full_name()} إلى {self.entity_name}"
+
 
 class TrainingDetail(models.Model):
-    student = models.ForeignKey(User,
-                                on_delete=models.CASCADE,
-                                related_name='student_training_details',
-                                limit_choices_to={'user_type': 'student'},
-                                verbose_name='الطالب')
-    training_entity = models.ForeignKey(TrainingEntity, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='جهة التدريب')
-    supervisor = models.ForeignKey(User,
-                                   on_delete=models.SET_NULL,
-                                   null=True,
-                                   blank=True,
-                                   related_name='supervised_training_details',
-                                   limit_choices_to={'user_type': 'supervisor'},
-                                   verbose_name='المشرف الأكاديمي')
+    student = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='student_training_details',
+        limit_choices_to={'user_type': 'student'},
+        verbose_name='الطالب'
+    )
+    training_entity = models.ForeignKey(
+        TrainingEntity,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name='جهة التدريب'
+    )
+    supervisor = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='supervised_training_details',
+        limit_choices_to={'user_type': 'supervisor'},
+        verbose_name='المشرف الأكاديمي'
+    )
     start_date = models.DateField(verbose_name='تاريخ البدء')
     end_date = models.DateField(verbose_name='تاريخ الانتهاء')
     tasks_assigned = models.TextField(blank=True, null=True, verbose_name='المهام الموكلة')

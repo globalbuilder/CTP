@@ -18,13 +18,12 @@ class TrainingRequestAdmin(admin.ModelAdmin):
 
 @admin.register(LetterRequest)
 class LetterRequestAdmin(admin.ModelAdmin):
-    list_display = ('student', 'training_entity', 'request_date', 'status')
-    list_filter = ('status', 'training_entity')
-    search_fields = ('student__username', 'training_entity__name')
+    list_display = ('student', 'entity_name', 'request_date', 'status')
+    list_filter = ('status',)
+    search_fields = ('student__username', 'entity_name')
 
 @admin.register(TrainingDetail)
 class TrainingDetailAdmin(admin.ModelAdmin):
     list_display = ('student', 'training_entity', 'supervisor', 'start_date', 'end_date')
     list_filter = ('training_entity',)
     search_fields = ('student__username', 'supervisor__username')
-

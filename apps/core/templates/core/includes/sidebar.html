@@ -1,9 +1,9 @@
- <!-- apps/core/templates/core/includes/sidebar.html -->
+<!-- apps/core/templates/core/includes/sidebar.html -->
 {% load static %}
 
 <nav class="sidebar-container">
-     <!-- الرئيسية Section -->
-     <div class="sidebar-section">
+    <!-- الرئيسية Section -->
+    <div class="sidebar-section">
         <div class="section-header">
             <span class="section-title">الرئيسية</span>
         </div>
@@ -29,6 +29,12 @@
                 <a href="{% url 'training:browse_entities' %}">
                     <i class="fas fa-briefcase"></i>
                     <span>تقديم طلب تدريب</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'training:request_letter' %}active{% endif %}">
+                <a href="{% url 'training:request_letter' %}">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>تقديم طلب خطاب</span>
                 </a>
             </li>
             <li class="{% if request.resolver_match.view_name == 'training:view_my_requests' %}active{% endif %}">
@@ -125,6 +131,7 @@
         </ul>
         <div class="sidebar-divider"></div>
     </div>
+
     {% elif request.user.user_type == 'head' %}
     <!-- الطلاب Section for Head -->
     <div class="sidebar-section">
@@ -141,7 +148,13 @@
             <li class="{% if request.resolver_match.view_name == 'training:training_requests_overview' %}active{% endif %}">
                 <a href="{% url 'training:training_requests_overview' %}">
                     <i class="fas fa-file-alt"></i>
-                    <span>طلبات التقديم</span>
+                    <span>طلبات التدريب</span>
+                </a>
+            </li>
+            <li class="{% if request.resolver_match.view_name == 'training:letter_requests_overview' %}active{% endif %}">
+                <a href="{% url 'training:letter_requests_overview' %}">
+                    <i class="fas fa-file-signature"></i>
+                    <span>طلبات الخطابات</span>
                 </a>
             </li>
             <li class="{% if request.resolver_match.view_name == 'evaluations:view_evaluations' %}active{% endif %}">
@@ -243,5 +256,4 @@
         </ul>
         <div class="sidebar-divider"></div>
     </div>
-</nav> 
-
+</nav>

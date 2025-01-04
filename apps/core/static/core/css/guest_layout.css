@@ -43,6 +43,8 @@ a {
     color: #fff;
     font-weight: 600;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+    background-color: #17a2b8;
 }
 
 /* Success (Green) */
@@ -59,11 +61,6 @@ a {
 .message.warning {
     background-color: #ffc107;
     color: #212529; /* darker text for yellow background */
-}
-
-/* Info (Blue) */
-.message.info {
-    background-color: #17a2b8;
 }
 
 /* Header Styles */

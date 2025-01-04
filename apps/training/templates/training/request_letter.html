@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}طلب تدريب - {{ entity.name }}{% endblock %}
+{% block title %}طلب خطاب تدريب{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'training/css/training.css' %}">
@@ -11,14 +11,13 @@
 <main>
     <div class="main-container">
         <section class="form-section">
-            <h2>طلب تدريب في {{ entity.name }}</h2>
-            <form method="post" enctype="multipart/form-data">
+            <h2>طلب خطاب تدريب</h2>
+            <form method="post">
                 {% csrf_token %}
-                {{ form.motivation_letter }}
-                {{ form.additional_documents }}
+                {{ form.as_p }}
                 <div class="form-actions">
                     <button type="submit" class="button">إرسال الطلب</button>
-                    <a href="{% url 'training:browse_entities' %}" class="button cancel-button">إلغاء</a>
+                    <a href="{% url 'training:view_my_requests' %}" class="button cancel-button">إلغاء</a>
                 </div>
             </form>
         </section>

@@ -1,5 +1,4 @@
 <!-- apps/training/templates/training/process_letter_request.html -->
-
 {% extends 'core/base.html' %}
 {% load static %}
 
@@ -17,7 +16,12 @@
             <div class="details">
                 <p><strong>الطالب:</strong> {{ letter_request.student.get_full_name }}</p>
                 <p><strong>الرقم الجامعي:</strong> {{ letter_request.student.student_profile.student_id }}</p>
-                <p><strong>جهة التدريب:</strong> {{ letter_request.training_entity.name }}</p>
+                <p><strong>اسم الجهة:</strong> {{ letter_request.entity_name }}</p>
+                <p><strong>عنوان الجهة:</strong> {{ letter_request.entity_address }}</p>
+                <p><strong>الشخص المسؤول:</strong> {{ letter_request.entity_contact_person }}</p>
+                <p><strong>البريد الإلكتروني:</strong> {{ letter_request.entity_contact_email }}</p>
+                <p><strong>رقم الهاتف:</strong> {{ letter_request.entity_contact_phone }}</p>
+
                 <p><strong>تاريخ البدء:</strong> {{ letter_request.start_date|date:"Y-m-d" }}</p>
                 <p><strong>تاريخ الانتهاء:</strong> {{ letter_request.end_date|date:"Y-m-d" }}</p>
             </div>
@@ -25,11 +29,9 @@
                 {% csrf_token %}
                 <button type="submit" name="action" value="approve" class="button">اعتماد</button>
                 <button type="submit" name="action" value="reject" class="button reject-button">رفض</button>
-                <a href="{% url 'training:training_requests_overview' %}" class="button cancel-button">عودة</a>
+                <a href="{% url 'training:letter_requests_overview' %}" class="button cancel-button">عودة</a>
             </form>
         </section>
     </div>
 </main>
 {% endblock %}
-
-

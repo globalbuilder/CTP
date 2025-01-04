@@ -1,5 +1,4 @@
 <!-- apps/training/templates/training/letter_template.html -->
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -54,7 +53,8 @@
         <h3>كلية علوم الحاسب ونظم المعلومات</h3>
     </div>
     <div class="content">
-        <p>سعادة مدير برنامج التدريب التعاوني للمرحلة الجامعية بـ {{ letter_request.training_entity.name }} حفظه الله</p>
+        <!-- CHANGED: we reference letter_request.entity_name instead of letter_request.training_entity.name -->
+        <p>سعادة مدير برنامج التدريب التعاوني للمرحلة الجامعية بـ {{ letter_request.entity_name }} حفظه الله</p>
         <p>السلام عليكم ورحمة الله وبركاته وبعد،</p>
         <p>
             يطيب لكلية علوم الحاسب ونظم المعلومات بجامعة نجران أن تقدم لكم مرشحها للتدريب التعاوني
@@ -100,4 +100,3 @@
     </div>
 </body>
 </html>
-

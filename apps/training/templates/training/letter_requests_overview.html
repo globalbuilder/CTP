@@ -1,8 +1,8 @@
-<!-- apps/training/templates/training/training_requests_overview.html -->
+<!-- apps/training/templates/training/letter_requests_overview.html -->
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}طلبات التدريب{% endblock %}
+{% block title %}طلبات الخطابات{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'training/css/training.css' %}">
@@ -12,32 +12,32 @@
 <main>
     <div class="main-container">
         <section class="requests-section">
-            <h2>طلبات التدريب</h2>
-            {% if direct_requests %}
+            <h2>طلبات الخطابات</h2>
+            {% if letter_requests %}
             <table class="requests-table">
                 <thead>
                     <tr>
                         <th>الطالب</th>
-                        <th>جهة التدريب</th>
+                        <th>اسم الجهة</th>
                         <th>تاريخ الطلب</th>
                         <th>العمليات</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for req in direct_requests %}
+                    {% for letter in letter_requests %}
                     <tr>
-                        <td>{{ req.student.get_full_name }}</td>
-                        <td>{{ req.training_entity.name }}</td>
-                        <td>{{ req.request_date|date:"d-m-Y" }}</td>
+                        <td>{{ letter.student.get_full_name }}</td>
+                        <td>{{ letter.entity_name }}</td>
+                        <td>{{ letter.request_date|date:"d-m-Y" }}</td>
                         <td>
-                            <a href="{% url 'training:process_training_request' req.pk %}" class="button">معالجة</a>
+                            <a href="{% url 'training:process_letter_request' letter.pk %}" class="button">معالجة</a>
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             {% else %}
-            <p>لا توجد طلبات تدريب مباشرة معلقة.</p>
+            <p>لا توجد طلبات خطابات قيد المعالجة.</p>
             {% endif %}
         </section>
     </div>

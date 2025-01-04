@@ -1,5 +1,4 @@
 <!-- apps/training/templates/training/process_training_request.html -->
-
 {% extends 'core/base.html' %}
 {% load static %}
 
@@ -20,7 +19,9 @@
                 <p><strong>تاريخ الطلب:</strong> {{ training_request.request_date|date:"d-m-Y" }}</p>
                 <p><strong>رسالة الدافع:</strong> {{ training_request.motivation_letter }}</p>
                 {% if training_request.additional_documents %}
-                <p><strong>المستندات الإضافية:</strong> <a href="{{ training_request.additional_documents.url }}" target="_blank">تحميل</a></p>
+                <p><strong>المستندات الإضافية:</strong>
+                   <a href="{{ training_request.additional_documents.url }}" target="_blank">تحميل</a>
+                </p>
                 {% endif %}
             </div>
             <form method="post">
@@ -35,4 +36,3 @@
     </div>
 </main>
 {% endblock %}
-
